@@ -518,15 +518,7 @@ var isDisabled = function isDisabled(optionDisable) {
   return optionDisable === true || optionDisable === 'mobile' && detect.mobile() || optionDisable === 'phone' && detect.phone() || optionDisable === 'tablet' && detect.tablet() || typeof optionDisable === 'function' && optionDisable() === true;
 };
 
-/**
- * Initializing AOS
- * - Create options merging defaults with user defined options
- * - Set attributes on <body> as global setting - css relies on it
- * - Attach preparing elements to options.startEvent,
- *   window resize and orientation change
- * - Attach function that handle scroll and everything connected to it
- *   to window scroll event and fire once document is ready to set initial state
- */
+
 var init = function init(settings) {
   options = _extends(options, settings);
 
@@ -541,27 +533,16 @@ var init = function init(settings) {
     options.disableMutationObserver = true;
   }
 
-  /**
-   * Observe [aos] elements
-   * If something is loaded by AJAX
-   * it'll refresh plugin automatically
-   */
+
   if (!options.disableMutationObserver) {
     observer.ready('[data-aos]', refreshHard);
   }
 
-  /**
-   * Don't init plugin if option `disable` is set
-   * or when browser is not supported
-   */
   if (isDisabled(options.disable) || isBrowserNotSupported()) {
     return disable();
   }
 
-  /**
-   * Set global settings on body, based on options
-   * so CSS can use it
-   */
+  
   document.querySelector('body').setAttribute('data-aos-easing', options.easing);
 
   document.querySelector('body').setAttribute('data-aos-duration', options.duration);
